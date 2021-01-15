@@ -1,0 +1,171 @@
+数据库的增删查改：
+create table goods(
+    goods_id int ,
+    goods_name varchar(20),
+    unitprice decimal(10,2),
+    category varchar(10) comment '商品类别',
+    provider varchar(10)
+);
+create table customer(
+    customer_id varchar(10),
+    name varchar(10),
+    address varchar(20),
+    email varchar(10),
+    sex bit,
+    card_id int
+);
+create table purchase(
+    order_id int ,
+    customer_id varchar(10),
+    goods_id int ,
+    nums int 
+);
+
+create table student(
+    id int ,
+    sn int comment '学号',
+    name varchar(20) comment '姓名',
+    qq_email varchar(20) comment 'qq邮箱'
+);
+INSERT INTO exam_result (id,name, Chinese,Englist,Math) VALUES
+ (1,'唐三藏', 67, 98, 56),
+ (2,'孙悟空', 87.5, 78, 77),
+ (3,'猪悟能', 88, 98.5, 90),
+ (4,'曹孟德', 82, 84, 67),
+ (5,'刘玄德', 55.5, 85, 45),
+ (6,'孙权', 70, 73, 78.5),
+ (7,'宋公明',75,65,30);
+
+ SELECT name,Chinese+Englist+Math FROM exam_result 
+ ORDER BY Chinese+Englist+Math desc;
+
+
+ insert into exam_result (id,name,Chinese,Englist,Math) VALUES
+ (9,'李四',80.0,85.0,86.0),
+ (10,'王五',80.4,85.6,91.3);
+
+
+ create table student(
+     id int primary key auto_increment,
+     sn int unique,
+     name varchar(10) default 'unknwon',
+     qq_email varchar(10)
+ );
+
+
+
+
+
+CREATE TABLE classes (
+ id INT PRIMARY KEY auto_increment,
+ name VARCHAR(20),
+ `desc` VARCHAR(100)
+);
+CREATE TABLE student1 (
+   id INT PRIMARY KEY auto_increment,
+   sn INT UNIQUE,
+   name VARCHAR(20) DEFAULT 'unkown',
+   qq_mail VARCHAR(20),
+ classes_id int,
+ FOREIGN KEY (classes_id) REFERENCES classes(id)
+);
+
+create table course(
+    id int primary key auto_increment,
+    coursename varchar(10)
+);
+
+create table score(
+    id int primary key auto_increment,
+    courseScore decimal(3,1),
+    student1_id int,
+    course_id int,
+    foreign key (student1_id) references student1(id),
+    foreign key (course_id) references course(id)
+);
+
+
+create database if not exists book character set utf8mb4;
+
+create table test_user(
+name varchar(10) comment '姓名',
+age int comment '年龄',
+email varchar(10) comment '邮箱',
+sex varchar(1) comment '性别',
+mobile varchar(15) comment '手机号'
+);
+
+
+
+create table classes(
+    id int primary key auto_increment,
+    name varchar(10)
+);
+create table student(
+    id int primary key auto_increment,
+    sn int unique,
+    name varchar(10) default 'unkown',
+    qq_email varchar(20),
+    classes_id int,
+    foreign key(classes_id) references classes(id)
+);
+insert INTO classes VALUES(2,'二班');
+insert INTO classes VALUES(3,'三班');
+insert INTO classes VALUES(4,'四班');
+
+insert into student VALUES(001,101,'张三','@123',1);
+insert into student(sn,name,qq_email,classes_id) VALUES
+(102,'李四','@124',2),
+(103,'王五','@125',3),
+(104,'赵六','@126',4);
+ create table infromation(
+     id int primary key auto_increment,
+     name varchar(10),
+     qq_email varchar(20)
+ );
+ insert into infromation(id,name,qq_email) SELECT id ,name,qq_email FROM student;
+
+
+
+ create table stu_test(
+     id int,
+     name varchar(10) comment '姓名',
+     age int ,
+     sex varchar(10) comment '性别',
+     birthday timestamp,
+     amout decimal(12,3)
+ );
+ create table student(
+     id int ,
+     sn int comment '学号',
+     name varchar(10) comment '姓名',
+     qq_email varchar(20) comment '邮箱'
+ );
+ insert into student (id,sn,name,qq_email) VALUES
+ (101,1001,'张三','123@'),
+ (102,1002,'李四','124@');
+
+ INSERT INTO exam_result (id,name, chinese, math, english) VALUES
+ (1,'唐三藏', 67, 98, 56),
+ (2,'孙悟空', 87.5, 78, 77),
+ (3,'猪悟能', 88, 98.5, 90),
+ (4,'曹孟德', 82, 84, 67),
+ (5,'刘玄德', 55.5, 85, 45),
+ (6,'孙权', 70, 73, 78.5),
+ (7,'宋公明‘，75，65，30);
+
+
+ CREATE TABLE exam_result (
+ id INT,
+ name VARCHAR(20),
+ chinese DECIMAL(3,1),
+ math DECIMAL(3,1),
+ english DECIMAL(3,1)
+)；
+INSERT INTO exam_result (id,name, chinese, math, english) VALUES
+ (2,'孙悟空', 87.5, 78, 77),
+ (3,'猪悟能', 88, 98.5, 90),
+ (4,'曹孟德', 82, 84, 67),
+ (5,'刘玄德', 55.5, 85, 45),
+ (6,'孙权', 70, 73, 78.5),
+ (7,'宋公明‘，75，65，30);
