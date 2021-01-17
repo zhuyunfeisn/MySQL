@@ -1,0 +1,75 @@
+
+
+select student.id,student.sn,student.name,student.qq_mail,score.score,coures.name,sum(score.score) from score
+join student on score.student_id=student.id
+join coures on score.coures_id=coures.id
+group by student.name;
+
+
+select student.id ,student.sn,student.name,sum(score.score) from student
+join score on student.id=score.student_id
+group by student.id;
+
+select student.id,student.sn,student.name,score.score,coures.name from score
+join student on score.student_id=student.id
+join coures on score.coures_id=coures.id;
+
+
+
+select student.id,student.sn,student.name,sum(score.score),coures.name from student
+left join score on student.id=score.student_id
+left join coures on coures.id=score.coures_id
+group by student.id;
+
+
+select
+s1.*
+from
+score s1
+join score s2 on s1.student_id=s2.student_id
+and s1.score<s2.score
+and s1.coures_id=1
+and s2.coures_id=3;
+
+
+
+SELECT
+    stu.*,
+    s1.score Java,
+    s2.score计算机原理FROM
+    score s1
+    JOIN score s2 ON s1.student_id = s2.student_id JOIN student stu ON s1.student_id = stu.id
+JOIN course c1 ON s1.course_id = c1.id
+JOIN course c2 ON s2.course_id = c2.id
+AND s1.score < s2.score
+AND c1.NAME = 'Java'
+AND c2.NAME = '计算机原理';
+
+
+select
+stu *,
+s1.score Java,
+s2.score 计算机原理
+from
+score s1
+join score s2 on s1 s1.student_id=s2.student_id
+join student stu on s1.student_id=stu.id
+join coures c1 on s1.coures_id=c1.id
+join coures c2 on s2.coures_id=c2.id
+and s1.score <s2.score
+and c1.name='Java'
+and c2.name ='计算机原理';
+
+
+
+
+索引和事物
+create table accout(
+    id int primary key auto_increment,   
+    name varchar(20) comment '账户名称',  
+    money decimal(11,2) comment '金额'
+);
+
+insert into accout(name, money) values 
+('阿里巴巴', 5000),
+('四十大盗', 1000);
