@@ -1,0 +1,135 @@
+package company.com;
+
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class Text_SecondTest {
+    public static void main(String[] args) throws SQLException {
+        String name= "计算机系2019级1班";
+        MySQLOperation(name);
+    }
+    public static void MySQLOperation(String name) {
+        Connection connection=null;
+        PreparedStatement statement=null;
+        ResultSet resultSet=null;
+        try {
+            DataSource  ds = new MysqlDataSource();
+            ((MysqlDataSource) ds).setUrl("jdbc:mysql://localhost:3306/stu_information?user=root&password=sn20000904&useUnicode=true&characterEncoding=UTF-8");
+             connection = ((MysqlDataSource) ds).getConnection();
+
+
+            String sql = "select student.id,student.sn,student.name,classes.name,classes.coures from classes\n" +
+                    "join student on classes.id=student.classes_id\n" +
+                    "where classes.name=?";//问号代表占位符  指定多个占位符，在执行sql的时候，替换值
+            //占位符占用之后，进行预编译时能检查出sql语句是否正确
+
+
+            //prepareStatement预编译的操作命令对象，注意使用String sql作为传入参数
+            //发送sql，让数据库预编译，语法分析，执行顺序分析，执行优化
+             statement = connection.prepareStatement(sql);
+            //替换占位符，指定占位符的位置（从1开始），数据类型和参数
+            statement.setString(1, name);
+
+            //预编译的操作命令对象PreparedStatement一定要使用无参的方法
+            resultSet = statement.executeQuery();
+
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("student.id");
+                String sn = resultSet.getString("student.sn");
+                String student_name = resultSet.getString("student.name");
+                String classes_name = resultSet.getString("classes.name");
+                String coures = resultSet.getString("classes.coures");
+                Student student = new Student(id, sn, student_name, classes_name, coures);
+                System.out.println(student.toString());
+
+            }
+        } catch (Exception throwables) {
+            throwables.printStackTrace();
+        } finally {
+            try {
+                if(connection!=null)
+                    connection.close();
+                if(statement!=null)
+                    statement.close();
+                if(resultSet!=null)
+                    resultSet.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+    }
+
+    private  static class  Student{
+        private int id;
+        private String sn;
+        private String student_name;
+        private String classes_name;
+        private String coures;
+
+        public Student(int id, String sn, String student_name, String classes_name, String coures) {
+            this.id = id;
+            this.sn = sn;
+            this.student_name = student_name;
+            this.classes_name = classes_name;
+            this.coures = coures;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getSn() {
+            return sn;
+        }
+
+        public void setSn(String sn) {
+            this.sn = sn;
+        }
+
+        public String getStudent_name() {
+            return student_name;
+        }
+
+        public void setStudent_name(String student_name) {
+            this.student_name = student_name;
+        }
+
+        public String getClasses_name() {
+            return classes_name;
+        }
+
+        public void setClasses_name(String classes_name) {
+            this.classes_name = classes_name;
+        }
+
+        public String getCoures() {
+            return coures;
+        }
+
+        public void setCoures(String coures) {
+            this.coures = coures;
+        }
+
+        @Override
+        public String toString() {
+            return "Student{" +
+                    "id=" + id +
+                    ", sn='" + sn + '\'' +
+                    ", student_name='" + student_name + '\'' +
+                    ", classes_name='" + classes_name + '\'' +
+                    ", coures='" + coures + '\'' +
+                    '}';
+        }
+    }
+}
+
